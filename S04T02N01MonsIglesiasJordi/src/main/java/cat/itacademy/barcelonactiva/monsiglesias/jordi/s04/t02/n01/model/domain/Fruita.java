@@ -11,10 +11,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table
+@Table(name = "fruites")
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
+//@AllArgsConstructor
+//@NoArgsConstructor
 
 public class Fruita {
 	@Id
@@ -24,6 +24,7 @@ public class Fruita {
 	private String nom;
 	@Column(nullable = false)
 	private int quantitatQuilos;
+	
 	
 }
 

@@ -1,5 +1,8 @@
 package cat.itacademy.barcelonactiva.monsiglesias.jordi.s04.t02.n01.controllers;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,37 +20,42 @@ import cat.itacademy.barcelonactiva.monsiglesias.jordi.s04.t02.n01.model.service
 @RequestMapping("/fruita")
 public class FruitaController {
 	
-	FruitaService fruitaservice;
+	@Autowired
+	private FruitaService fruitaservice;
 	
-	@PostMapping
-	public ResponseEntity saveFruita(@RequestBody Fruita fruita) {
+	@PostMapping("/add")
+	public Fruita createFruita(@RequestBody Fruita fruita) {
+		return fruitaservice.createFruita(fruita); //HttpStatus.CREATED);
+	}
+	
+	@GetMapping("/getOne/{id}")
+	public Fruita getFruitaById(@PathVariable("id") Long id) {
+		return fruitaservice.getFruitaById(id); //HttpStatus.OK);
+	}
+	
+	@PutMapping("/update/{id}")
+	public Fruita updateFruitaById(@PathVariable("id") Long id, @RequestBody Fruita fruita) {
 		
-		return new ResponseEntity(fruitaservice.saveFruita(fruita), HttpStatus.CREATED);
+		return fruitaservice.updateFruitaById(id, fruita); //HttpStatus.OK);
 		
 	}
 	
-	@GetMapping("/{id}")
-	public ResponseEntity obtenirFruita(@PathVariable("id") Long id) {
+	@DeleteMapping("/delete/{id}")
+	public void deleteFruitaById(@PathVariable("id") Long id) {
+		fruitaservice.deleteFruitaById(id);
 		
-		return new ResponseEntity(fruitaservice.obtenirFruita(id), HttpStatus.OK);
-		
-	}
-	
-	@PutMapping("/{id}")
-	public ResponseEntity modificarFruita(@PathVariable("id") Long id, @RequestBody Fruita fruita) {
-		
-		return new ResponseEntity(fruitaservice.modificarFruita(id, fruita), HttpStatus.OK);
-		
-	}
-	
-	@DeleteMapping("/{id}")
-	public ResponseEntity eliminarFruita(@PathVariable("id") Long id) {
-		boolean resposta = fruitaservice.eliminarFruita(id);
+		/*boolean resposta = fruitaservice.eliminarFruita(id);
 		if(resposta) {
 			return new ResponseEntity(HttpStatus.OK);
 		}else {
 			return new ResponseEntity(HttpStatus.NOT_FOUND);
-		}
+		}*/
 	
 	}
+	
+	@GetMapping("/getAll")
+	public List<Fruita> getAllFruites(){
+		return fruitaservice.getAllFruites();
+	}
+	
 }

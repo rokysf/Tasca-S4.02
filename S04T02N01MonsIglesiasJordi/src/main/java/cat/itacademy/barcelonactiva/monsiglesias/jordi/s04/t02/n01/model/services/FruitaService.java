@@ -1,5 +1,6 @@
 package cat.itacademy.barcelonactiva.monsiglesias.jordi.s04.t02.n01.model.services;
 
+import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,20 +12,22 @@ import cat.itacademy.barcelonactiva.monsiglesias.jordi.s04.t02.n01.model.reposit
 public class FruitaService implements IFruitaService{
 
 	@Autowired
-	FruitaRepository fruitarepository;
+	private FruitaRepository fruitarepository;
 	
 	@Override
-	public Fruita saveFruita(Fruita fruita) {
+	public Fruita createFruita(Fruita fruita) {
 		return fruitarepository.save(fruita);
 	}
 
 	@Override
-	public Optional<Fruita> obtenirFruita(Long id) {
-		return fruitarepository.findById(id);
+	public Fruita getFruitaById(Long id) {
+		Optional<Fruita> optionalFruita = fruitarepository.findById(id);
+		return optionalFruita.get();
+		
 	}
 
 	@Override
-	public Fruita modificarFruita(Long id, Fruita fruitaModificar) {
+	public Fruita updateFruitaById(Long id, Fruita fruitaModificar) {
 		Fruita fruitaBuscada = fruitarepository.findById(id).get();
 		fruitaBuscada.setNom(fruitaModificar.getNom());
 		fruitaBuscada.setQuantitatQuilos(fruitaModificar.getQuantitatQuilos());
@@ -32,13 +35,11 @@ public class FruitaService implements IFruitaService{
 	}
 
 	@Override
-	public boolean eliminarFruita(Long id) {
-		try {
-			fruitarepository.deleteById(id);
-			return true;
-		}catch(Exception e){
-			return false;
-		}
+	public void deleteFruitaById(Long id) {
+		fruitarepository.deleteById(id);
 	}
 
+	public List<Fruita> getAllFruites(){
+		return fruitarepository.findAll();
+	}
 }
