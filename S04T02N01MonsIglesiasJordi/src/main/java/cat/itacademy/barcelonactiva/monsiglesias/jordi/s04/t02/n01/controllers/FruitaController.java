@@ -1,6 +1,7 @@
 package cat.itacademy.barcelonactiva.monsiglesias.jordi.s04.t02.n01.controllers;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,22 +25,27 @@ public class FruitaController {
 	private FruitaService fruitaservice;
 	
 	@PostMapping("/add")
-	public Fruita createFruita(@RequestBody Fruita fruita) {
-		return fruitaservice.createFruita(fruita); //HttpStatus.CREATED);
+	public ResponseEntity<Fruita> createFruita(@RequestBody Fruita fruita) {
+		fruitaservice.createFruita(fruita);
+		return new ResponseEntity<Fruita>(fruita, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/getOne/{id}")
-	public Fruita getFruitaById(@PathVariable("id") Long id) {
-		return fruitaservice.getFruitaById(id); //HttpStatus.OK);
+	public ResponseEntity<Fruita> getFruitaById(@PathVariable("id") Long id) {
+		Optional<Fruita> fruitaGetOne = fruitaservice.getFruitaById(id);
+		if(fruitaGetOne.isEmpty()) {
+			return new ResponseEntity<Fruita>(HttpStatus.NOT_FOUND);
+		}else {
+			return new ResponseEntity<Fruita>(fruitaGetOne.get(),HttpStatus.OK);
+		}
 	}
 	
-	@PutMapping("/update/{id}")
-	public Fruita updateFruitaById(@PathVariable("id") Long id, @RequestBody Fruita fruita) {
-		
-		return fruitaservice.updateFruitaById(id, fruita); //HttpStatus.OK);
-		
+	@PutMapping("/update")
+	public ResponseEntity<Fruita>  update(@RequestBody Fruita fruita) {
+		fruitaService.update(fruita);
+		return new ResponseEntity<>(fruita, HttpStatus.OK);
 	}
-	
+		
 	@DeleteMapping("/delete/{id}")
 	public void deleteFruitaById(@PathVariable("id") Long id) {
 		fruitaservice.deleteFruitaById(id);
