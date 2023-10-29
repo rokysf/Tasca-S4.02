@@ -11,7 +11,7 @@ public interface IFruitaService {
 	
 	Optional<Fruita> getFruitaById(Long id);
 	
-	Fruita updateFruita(Fruita fruitaModificar);
+	Fruita updateFruita(Fruita fruitaModificada);
 	
 	void deleteFruitaById(Long id);
 	

@@ -15,23 +15,18 @@ public class FruitaService implements IFruitaService{
 	private FruitaRepository fruitarepository;
 	
 	@Override
-	public Fruita createFruita(Fruita fruita) {
+	public  Fruita createFruita(Fruita fruita) {
 		return fruitarepository.save(fruita);
 	}
 
 	@Override
 	public Optional<Fruita> getFruitaById(Long id) {
-		Optional<Fruita> optionalFruita = fruitarepository.findById(id);
-		return optionalFruita;
-		
+		return fruitarepository.findById(id);
 	}
 
 	@Override
-	public Fruita updateFruita(Fruita fruitaModificar) {
-		Fruita fruitaBuscada = fruitarepository.findById(id);
-		fruitaBuscada.setNom(fruitaModificar.getNom());
-		fruitaBuscada.setQuantitatQuilos(fruitaModificar.getQuantitatQuilos());
-		return fruitarepository.save(fruitaBuscada);
+	public Fruita updateFruita(Fruita fruitaModificada) {
+		return fruitarepository.save(fruitaModificada);
 	}
 
 	@Override

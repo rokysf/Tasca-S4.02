@@ -1,20 +1,18 @@
 package cat.itacademy.barcelonactiva.monsiglesias.jordi.s04.t02.n01.model.domain;
 
 import jakarta.persistence.Column;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+
 
 @Entity
 @Table(name = "fruites")
 @Data
-//@AllArgsConstructor
-//@NoArgsConstructor
 
 public class Fruita {
 	@Id

@@ -2,7 +2,6 @@ package cat.itacademy.barcelonactiva.monsiglesias.jordi.s04.t02.n01.controllers;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -41,27 +40,33 @@ public class FruitaController {
 	}
 	
 	@PutMapping("/update")
-	public ResponseEntity<Fruita>  update(@RequestBody Fruita fruita) {
-		fruitaService.update(fruita);
-		return new ResponseEntity<>(fruita, HttpStatus.OK);
+	public ResponseEntity<Fruita> update(@RequestBody Fruita fruitaModificada) {
+		Optional<Fruita> fruitaGetOne = fruitaservice.getFruitaById(fruitaModificada.getId());
+		if(fruitaGetOne.isEmpty()) {
+			return new ResponseEntity<Fruita>(HttpStatus.NOT_FOUND);
+		}else {
+			fruitaservice.updateFruita(fruitaModificada);
+			return new ResponseEntity<Fruita>(fruitaModificada, HttpStatus.OK);
+		}
 	}
 		
 	@DeleteMapping("/delete/{id}")
-	public void deleteFruitaById(@PathVariable("id") Long id) {
-		fruitaservice.deleteFruitaById(id);
-		
-		/*boolean resposta = fruitaservice.eliminarFruita(id);
-		if(resposta) {
-			return new ResponseEntity(HttpStatus.OK);
+	public ResponseEntity<Fruita> deleteFruitaById(@PathVariable("id") Long id) {
+		Optional<Fruita> fruitaGetOne = fruitaservice.getFruitaById(id);
+		if(fruitaGetOne.isEmpty()) {
+			return new ResponseEntity<Fruita>(HttpStatus.NOT_FOUND);
 		}else {
-			return new ResponseEntity(HttpStatus.NOT_FOUND);
-		}*/
-	
+			fruitaservice.deleteFruitaById(id);
+			return new ResponseEntity<Fruita>(HttpStatus.OK);
+		}
 	}
 	
 	@GetMapping("/getAll")
-	public List<Fruita> getAllFruites(){
-		return fruitaservice.getAllFruites();
+	public ResponseEntity<List<Fruita>> getAllFruites(){
+		if(fruitaservice.getAllFruites().size()==0) {
+		return new ResponseEntity<List<Fruita>>(HttpStatus.NO_CONTENT);
+		}else
+		return new ResponseEntity<List<Fruita>>(fruitaservice.getAllFruites(), HttpStatus.OK);
+		}
 	}
-	
-}
+
