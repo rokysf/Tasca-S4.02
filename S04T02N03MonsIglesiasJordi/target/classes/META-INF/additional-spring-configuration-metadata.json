@@ -1,0 +1,12 @@
+{"properties": [
+  {
+    "name": "spring.data.mongodb.auto-create-collection",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.data.mongodb.auto-create-collection'"
+  },
+  {
+    "name": "spring.data.mongodb.auto-create-database",
+    "type": "java.lang.String",
+    "description": "A description for 'spring.data.mongodb.auto-create-database'"
+  }
+]}
