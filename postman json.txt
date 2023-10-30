@@ -1,4 +1,0 @@
-{
-"nom":"Poma",
-"quantitatQuilos":19
-}
